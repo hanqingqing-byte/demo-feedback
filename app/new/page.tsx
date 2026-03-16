@@ -21,7 +21,6 @@ export default async function NewDemoPage() {
 
         <div className="editorHeading">
           <h1 className="editorTitle">新建 Demo</h1>
-          <p className="muted">填好项目名称、补充说明、上传设计图，然后生成分享链接。</p>
         </div>
 
         <CreateDemoForm />

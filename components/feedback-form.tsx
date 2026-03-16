@@ -66,27 +66,29 @@ export function FeedbackForm({ shareToken }: { shareToken: string }) {
       </div>
 
       <div className="field">
+        <label htmlFor="nickname">针对人物昵称：</label>
         <input
           id="nickname"
-          placeholder="输入你的昵称"
+          placeholder="针对人物昵称"
           value={nickname}
           onChange={(event) => setNickname(event.target.value)}
         />
       </div>
 
       <div className="field">
+        <label htmlFor="content">反馈内容</label>
         <textarea
           id="content"
-          placeholder="你的建议，互评时为方便，带上你觉得哪里有问题。"
+          placeholder="你的建议，互评时为方便，带上你觉得哪里有问题？"
           value={content}
           onChange={(event) => setContent(event.target.value)}
         />
       </div>
 
       <div className="feedbackSubmitRow">
-        <span className="hint">建议会立即回收到设计师后台，不会出现在公开页上。</span>
+        <span />
         <button className="button" disabled={isSubmitting} type="submit">
-          {isSubmitting ? "提交中..." : "提交反馈"}
+          {isSubmitting ? "提交中..." : "完成反馈"}
         </button>
       </div>
 
