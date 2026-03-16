@@ -23,7 +23,7 @@ export default async function DemoViewerPage({
           <div className="topbarBrand">
             <div className="brandMeta">
               <div className="brandTitle">Demo Feedback</div>
-              <div className="brandSubtitle">上传设计图并分享链接，快速收集用户反馈</div>
+              <div className="brandSubtitle">上传设计图片并分享链接，快速收集用户反馈</div>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@ export default async function DemoViewerPage({
         </div>
 
         <div className="viewerGalleryShell">
-          <div className="viewerGalleryRow">
+          <div className="viewerGalleryRow viewerGalleryGrid">
             {demo.images.map((image) => (
               <div className="viewerImage viewerImageCompact" key={image.id}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}

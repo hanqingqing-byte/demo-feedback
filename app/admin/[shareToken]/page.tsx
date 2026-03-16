@@ -21,6 +21,9 @@ export default async function AdminFeedbackPage({
     notFound();
   }
 
+  const visibleFeedback = demo.feedback.slice(0, 10);
+  const hasMoreFeedback = demo.feedback.length > visibleFeedback.length;
+
   return (
     <main className="shell">
       <section className="editorShell adminShell">
@@ -29,9 +32,17 @@ export default async function AdminFeedbackPage({
             &lt; Demo Feedback
           </Link>
           <div className="toolbar">
-            <Link className="buttonSecondary" href={`/demos/${shareToken}`}>
-              打开公开页
-            </Link>
+            <CopyShareLinkButton
+              defaultLabel="复制分享"
+              url={`${getBaseUrl()}/demos/${shareToken}`}
+              variant="primary"
+            />
+            <DeleteDemoButton
+              label="退出项目"
+              redirectToHome
+              shareToken={shareToken}
+              title={demo.title}
+            />
           </div>
         </div>
 
@@ -51,44 +62,41 @@ export default async function AdminFeedbackPage({
               </div>
             ))}
           </div>
-          <div className="wireActionRow">
-            <CopyShareLinkButton url={`${getBaseUrl()}/demos/${shareToken}`} variant="primary" />
-            <DeleteDemoButton redirectToHome shareToken={shareToken} title={demo.title} />
-          </div>
-          <div className="meta">
-            <span>{demo.images.length} 张图</span>
-            <span>{demo.feedback.length} 条建议</span>
-            <span>更新于 {formatDate(demo.updatedAt)}</span>
-          </div>
         </div>
 
         <section className="panel adminListPanel">
-          <div className="panelHeader">
-            <div>
-              <span className="pill">反馈列表</span>
-              <h2 className="panelTitle" style={{ marginTop: 12 }}>
-                这条 Demo 收到的全部建议
-              </h2>
-            </div>
+          <div className="adminListHeader">
+            <h2 className="panelTitle">反馈列表</h2>
           </div>
           {demo.feedback.length === 0 ? (
             <div className="emptyState">还没有人提交建议。把公开链接发出去后，反馈会自动沉到这里。</div>
           ) : (
-            <div className="feedbackList">
-              {demo.feedback.map((item) => (
-                <article className="adminListCard" key={item.id}>
-                  <div className="adminFeedbackTop">
-                    <strong>{item.nickname || "匿名访客"}</strong>
-                    <span className="adminFeedbackBadge">NEW</span>
-                  </div>
-                  <p className="adminFeedbackBody">{item.content}</p>
-                  <div className="meta">
-                    <span>{item.deviceType}</span>
-                    <span>{formatDate(item.createdAt)}</span>
-                  </div>
-                </article>
-              ))}
-            </div>
+            <>
+              <div className="feedbackList">
+                {visibleFeedback.map((item) => (
+                  <article className="adminListCard" key={item.id}>
+                    <div className="adminFeedbackTop">
+                      <strong>{item.nickname || "匿名访客"}</strong>
+                      <span className="adminFeedbackBadge">NEW</span>
+                    </div>
+                    <p className="adminFeedbackBody">{item.content}</p>
+                    <div className="meta">
+                      <span>{item.deviceType}</span>
+                      <span>{formatDate(item.createdAt)}</span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <div className="adminListFooter">
+                <span>{`共 ${demo.feedback.length} 条反馈`}</span>
+                <div className="adminPager">
+                  <span className="adminPagerArrow">&lt;</span>
+                  <span className="adminPagerCurrent">1</span>
+                  <span className="adminPagerTotal">{hasMoreFeedback ? "..." : "/ 1"}</span>
+                  <span className="adminPagerArrow">&gt;</span>
+                </div>
+              </div>
+            </>
           )}
         </section>
       </section>

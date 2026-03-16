@@ -19,6 +19,7 @@ export function CreateDemoForm() {
   const [error, setError] = useState("");
   const [createdShareToken, setCreatedShareToken] = useState("");
   const hasPreviews = previews.length > 0;
+  const uploadCountLabel = `${files.length} 张设计图`;
 
   useEffect(() => {
     const nextPreviews = files.map((file) => ({
@@ -91,19 +92,22 @@ export function CreateDemoForm() {
         </div>
 
         <div className="field">
-          <label htmlFor="description">Demo 描述</label>
+          <label htmlFor="description">Demo 备注</label>
           <textarea
             id="description"
-            placeholder="补充这版想重点收集什么反馈，比如首屏信息层级、下单路径是否顺。"
+            placeholder="补充这版想重点收集什么反馈。"
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           />
         </div>
 
         <div className="field">
-          <label htmlFor="images">上传设计图</label>
+          <div className="fieldTitleRow">
+            <label htmlFor="images">上传设计图</label>
+            {hasPreviews ? <span className="fieldMeta">{uploadCountLabel}</span> : null}
+          </div>
           {hasPreviews ? (
-            <div className="editorThumbGrid">
+            <div className="editorUploadStage editorUploadStageFilled">
               {previews.map((preview, index) => (
                 <div className="thumb thumbWithBadge" key={preview.url}>
                   <span className="thumbBadge">{index + 1}</span>
@@ -113,16 +117,17 @@ export function CreateDemoForm() {
               ))}
               <label className="uploadTile uploadTileInline" htmlFor="images">
                 <div className="uploadTileIcon">↑</div>
-                <div>点击上传</div>
+                <div>继续上传</div>
               </label>
             </div>
           ) : (
-            <label className="uploadBox uploadBoxEmpty" htmlFor="images">
-              <div className="uploadBoxEmptyInner">
+            <div className="editorUploadStage editorUploadStageEmpty">
+              <label className="uploadTile uploadTileStandalone" htmlFor="images">
                 <div className="uploadTileIcon">↑</div>
                 <div className="uploadBoxTitle">点击上传</div>
-              </div>
-            </label>
+                <div className="uploadTileHint">支持 PNG、JPG、WEBP</div>
+              </label>
+            </div>
           )}
 
           <input
@@ -133,7 +138,6 @@ export function CreateDemoForm() {
             multiple
             onChange={(event) => setFiles(Array.from(event.target.files ?? []))}
           />
-          <p className="hint">支持 PNG、JPG、WEBP，多图会按你选择的顺序展示。</p>
         </div>
 
         {error ? <div className="emptyState">{error}</div> : null}

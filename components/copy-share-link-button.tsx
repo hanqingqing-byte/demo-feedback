@@ -4,10 +4,14 @@ import { useState } from "react";
 
 export function CopyShareLinkButton({
   url,
-  variant = "secondary"
+  variant = "secondary",
+  defaultLabel = "复制分享链接",
+  copiedLabel = "已复制链接"
 }: {
   url: string;
   variant?: "primary" | "secondary";
+  defaultLabel?: string;
+  copiedLabel?: string;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -27,7 +31,7 @@ export function CopyShareLinkButton({
       onClick={handleCopy}
       type="button"
     >
-      {copied ? "已复制链接" : "复制分享链接"}
+      {copied ? copiedLabel : defaultLabel}
     </button>
   );
 }

@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation";
 export function DeleteDemoButton({
   shareToken,
   title,
-  redirectToHome = false
+  redirectToHome = false,
+  label = "删除 Demo"
 }: {
   shareToken: string;
   title: string;
   redirectToHome?: boolean;
+  label?: string;
 }) {
   const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -48,7 +50,7 @@ export function DeleteDemoButton({
 
   return (
     <button className="buttonDanger" disabled={isDeleting} onClick={handleDelete} type="button">
-      {isDeleting ? "删除中..." : "删除 Demo"}
+      {isDeleting ? "删除中..." : label}
     </button>
   );
 }
